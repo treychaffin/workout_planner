@@ -12,7 +12,7 @@ To create an exercise, run the 'create_exercise' function from the
 
 Example:
 
-> create_exercise('bench press','push')
+    create_exercise('bench press','push')
 
 The example shown will create an exercise with the name being 'Bench Press'
 and the type being classified as a 'push' exercise. 
