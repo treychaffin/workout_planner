@@ -24,26 +24,26 @@ To create a workout plan, run the 'create_plan' function from the
 
 Example:
 
-> create_plan(4)
+    create_plan(4)
 
 Output:
 
-> ** push ***
-> Dip
-> Standing Overhead Press
-> Decline Barbell Bench Press
-> Barbell Flat Bench Press
-> 
-> *** pull ***
-> Barbell Shoulder Shrugs
-> Chin-Up
-> Deadlift
-> Dumbell Hammer Curls
-> 
-> *** legs ***
-> Tib Bar Raises
-> Barbell Front Squat
-> Barbell Lunges
-> Barbell Standing Calf Raises
+    *** push ***
+    Dip
+    Standing Overhead Press
+    Decline Barbell Bench Press
+    Barbell Flat Bench Press
+    
+    *** pull ***
+    Barbell Shoulder Shrugs
+    Chin-Up
+    Deadlift
+    Dumbell Hammer Curls
+    
+    *** legs ***
+    Tib Bar Raises
+    Barbell Front Squat
+    Barbell Lunges
+    Barbell Standing Calf Raises
 
 The example shown will create an exercise plan with 4 exercises per workout.
