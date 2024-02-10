@@ -1,15 +1,15 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Sun Dec 31 18:05:22 2023
-
-@author: Trey
-"""
+#!/usr/bin/env python3
 
 import json
 import os
 
+IsMainApp = (__name__ == "__main__")
+
 # define directory of current script
 script_dir = os.path.dirname(__file__)
+
+def main(exercise_name,exercise_type):
+    create_exercise(exercise_name,exercise_type)
 
 def create_exercise(exercise_name,exercise_type):
     '''
@@ -78,8 +78,21 @@ def create_exercise(exercise_name,exercise_type):
         file.write(json.dumps(exercise))
         
     # let user know file has been created
-    print("***Exercise Created***")    
+    print("*** Exercise Created ***")    
     print("Exercise Name: ",exercise_name)
     print("Exercise Type: ",exercise_type)
     print("Filename:      ",exercise_filename)
     print("Filepath:      ",exercise_filepath)
+    print()
+
+if IsMainApp:
+    import argparse
+    argparser = argparse.ArgumentParser(description='adds an json exercise to the exercises folder')
+    argparser.add_argument('--ExerciseName',
+                        required=True,
+                        type=str)
+    argparser.add_argument('--ExerciseType',
+                        required=True,
+                        type=str)
+    args = argparser.parse_args()
+    main(args.ExerciseName,args.ExerciseType)
