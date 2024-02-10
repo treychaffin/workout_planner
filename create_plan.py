@@ -12,70 +12,87 @@ import random
 # define directory of current script
 script_dir = os.path.dirname(__file__)
 
-# create workout
-def create_plan(exercises_per_workout):
+def workout_plan(list_of_exercises, exercises_per_workout):
     '''
-    This function creates and prints a push, pull, legs plan    
+    randomly creates a list of workouts of the specified ammount.
 
     Parameters
     ----------
-    exercises_per_workout : integer
-        The number of exercises per session
+    list_of_exercises : list
+        list of available exercises.
+    exercises_per_workout : int
+        the ammount of exercises per workout
+    Returns
+    -------
+    exercise_list : list
+        the workout plan
+
+    '''
+    
+    exercise_list = []
+    
+    exercise_index = random.sample(range(len(list_of_exercises)),
+                                   exercises_per_workout)
+    for i in range(exercises_per_workout):
+        exercise_list.append(list_of_exercises[exercise_index[i]].get('name'))
+    
+    return exercise_list
+
+# create exercise list
+def exercise_list(exercise_type):
+    '''
+    creates and returns a list of available exercises from the exercises
+    subfolder that have the matching type
+
+    Parameters
+    ----------
+    exercise_type : str
+        Type of exercise; push, pull, legs.
 
     Returns
     -------
-    None.
+    exercise_list : list
+        A list of available exercise with the corresponding type
 
     '''
-
+    
+    exercise_list = []
+    
     # define exercise folder name, prepend script directory
     exercise_foldername = os.path.join(script_dir,"exercises")
 
     # create list of exercises in exercises folder
     exercise_files = os.listdir(exercise_foldername)
-
-    # create list for exercises to go in
-    push_list = []
-    pull_list = []
-    legs_list = []
-
-    # fill the list with exercises
+    
     for i in range(len(exercise_files)):
         with open(os.path.join(exercise_foldername,exercise_files[i])) as file:
             exercise = json.load(file)
-            if (exercise.get('type') == 'push'):
-                push_list.append(exercise)
-            elif (exercise.get('type') == 'pull'):
-                pull_list.append(exercise)
-            elif (exercise.get('type') == 'legs'):
-                legs_list.append(exercise)
+            if (exercise.get('type') == exercise_type):
+                exercise_list.append(exercise)
     
-    # create empty lists, to be filled later
-    push = []
-    pull = []
-    legs = []
-    
-    # create a list of random, non-repeating indexes from exercises list
-    push_index = random.sample(range(len(push_list)),exercises_per_workout)
-    pull_index = random.sample(range(len(pull_list)),exercises_per_workout)
-    legs_index = random.sample(range(len(legs_list)),exercises_per_workout)
+    return exercise_list
 
-    # create list of non-repeating exercises
-    for i in range(exercises_per_workout):
-        push.append(push_list[push_index[i]].get('name'))
-        pull.append(pull_list[pull_index[i]].get('name'))
-        legs.append(legs_list[legs_index[i]].get('name'))
+# create weekly workout plan
+def weekly_plan(exercises_per_workout=4, plan=['push','pull','legs']):
+    '''
+    creates a weekly workout plan and prints the plan to console
+
+    Parameters
+    ----------
+    exercises_per_workout : int
+        The ammount of exercises per each workout. The default is 4.
+    plan : list
+        The workout type plan. The default is ['push','pull','legs'].
+
+    Returns
+    -------
+    none.
+
+    '''
     
-    # print plan
-    print('*** push ***')
-    for i in range(len(push)):
-        print(push[i])
-    print()
-    print('*** pull ***')
-    for i in range(len(pull)):
-        print(pull[i])
-    print()
-    print('*** legs ***')
-    for i in range(len(legs)):
-        print(legs[i])
-    
+    for i in range(len(plan)):
+        session_plan = workout_plan(exercise_list(plan[i]), 
+                                    exercises_per_workout)
+        print(f'*** {plan[i]} ***')
+        for i in range(len(session_plan)): print(session_plan[i]) 
+        print()    
